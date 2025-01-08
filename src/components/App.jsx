@@ -9,6 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Routes } from 'react-router';
 import Home from './Home';
 import Login from './Login';
+import Registration from './Registration';
 
 function App() {
   // const [notes, setNotes] = useState([]);
@@ -33,7 +34,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
-
+          <Route path='/registration' element={<Registration />}></Route>
         </Routes>
         {/* <Header /> */}
         {/* <CreateArea onAdd={addNote} />

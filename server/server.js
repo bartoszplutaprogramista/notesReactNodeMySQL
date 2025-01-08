@@ -74,6 +74,31 @@ app.post('/login', (req, res) => {
     })
 })
 
+app.post('/registration', (req, res) => {
+    const sql = 'INSERT INTO users (email, password) VALUES (?,?)';
+    db.query(sql, [req.body.email, req.body.password], (err, data) => {
+        if (err) return res.json({
+            Massage: "Server Side Error"
+        });
+        // if (data.length > 0) {
+        //     const name = data[0].name;
+        //     const token = jwt.sign({
+        //         name
+        //     }, "our-jsonwebtoken-secret-key", {
+        //         expiresIn: '1d'
+        //     });
+        //     res.cookie('token', token);
+        //     return res.json({
+        //         Status: "Success"
+        //     })
+        // } else {
+        //     return res.json({
+        //         Message: "No Records existed"
+        //     });
+        // }
+    })
+})
+
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
     return res.json({
