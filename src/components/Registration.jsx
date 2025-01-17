@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Registration() {
     const [values, setValues] = useState({
         email: "",
         passwords: ""
-    })
+    });
+
+    const [password, setPassword] = useState("");
+    const [visible, setVisible] = useState(false);
 
     const navigate = useNavigate();
 
@@ -31,12 +35,24 @@ export default function Registration() {
                 <h2>Sign-In</h2>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
-                        <label htmlFor="email"><strong>Email</strong></label>
-                        <input type="email" placeholder="Enter Email" name='email' autoComplete='off' onChange={e => setValues({ ...values, email: e.target.value })} className='form-control rounded-0' />
+                        <label htmlFor="email"><strong>Imię</strong></label>
+                        <input type="email" placeholder="Wpisz Imię" name='name' autoComplete='off' onChange={e => setValues({ ...values, name: e.target.value })} className='form-control rounded-0' />
                     </div>
                     <div className='mb-3'>
-                        <label htmlFor="password"><strong>Password</strong></label>
-                        <input type="password" placeholder="Enter Password" name='password' onChange={e => setValues({ ...values, password: e.target.value })} className='form-control rounded-0' />
+                        <label htmlFor="email"><strong>Email</strong></label>
+                        <input type="email" placeholder="Wpisz Email" name='email' autoComplete='off' onChange={e => setValues({ ...values, email: e.target.value })} className='form-control rounded-0' />
+                    </div>
+                    <div className='mb-3'>
+
+                        <label htmlFor="password"><strong>Hasło</strong></label>
+                        <div className='d-flex align-items-center justify-content-end'>
+                            <input placeholder="EWpisz Hasło" name='password' type={visible ? "text" : "password"} onChange={e => setValues({ ...values, password: e.target.value })} className='form-control rounded-0' />
+                            <div className="position-absolute me-3" onClick={() => setVisible(!visible)}>
+                                {
+                                    visible ? <EyeOutlined style={{ fontSize: '120%' }} /> : <EyeInvisibleOutlined style={{ fontSize: '120%' }} />
+                                }
+                            </div>
+                        </div>
                     </div>
                     <button type='submit' className='btn btn-success w-100 rounded-0'>Zarejestruj się</button>
                 </form>
