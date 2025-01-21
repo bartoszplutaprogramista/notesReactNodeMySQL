@@ -21,7 +21,9 @@ export default function Registration() {
         axios.post('http://localhost:8081/registration', values)
             .then(res => {
                 if (res.data.Status === "Success") {
-                    navigate('/');
+                    alert("Zarejestrowano pomyślnie! Mozesz się teraz zalogować.")
+                    navigate('/login');
+
                 } else {
                     alert(res.data.Massage)
                 }
@@ -36,7 +38,7 @@ export default function Registration() {
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Imię</strong></label>
-                        <input type="email" placeholder="Wpisz Imię" name='name' autoComplete='off' onChange={e => setValues({ ...values, name: e.target.value })} className='form-control rounded-0' />
+                        <input type="text" placeholder="Wpisz Imię" name='name' autoComplete='off' onChange={e => setValues({ ...values, name: e.target.value })} className='form-control rounded-0' />
                     </div>
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Email</strong></label>

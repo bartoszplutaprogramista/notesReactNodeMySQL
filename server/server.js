@@ -75,11 +75,16 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/registration', (req, res) => {
-    const sql = 'INSERT INTO users (email, password) VALUES (?,?)';
-    db.query(sql, [req.body.email, req.body.password], (err, data) => {
+    const sql = 'INSERT INTO users (name, email, password) VALUES (?,?,?)';
+    db.query(sql, [req.body.name, req.body.email, req.body.password], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
-        });
+        })
+        else {
+            return res.json({
+                Status: "Success"
+            })
+        }
         // if (data.length > 0) {
         //     const name = data[0].name;
         //     const token = jwt.sign({

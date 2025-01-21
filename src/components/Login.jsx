@@ -20,7 +20,7 @@ export default function Login() {
                 if (res.data.Status === "Success") {
                     navigate('/');
                 } else {
-                    alert(res.data.Massage)
+                    alert("Nie ma nikogo w bazie", res.data.Massage)
                 }
             })
             .catch(err => console.group(err));
