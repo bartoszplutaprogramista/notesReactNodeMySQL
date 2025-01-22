@@ -31,13 +31,27 @@ function CreateArea(props) {
     event.preventDefault();
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:8081/savetodatabase', values)
+      .then(res => {
+        if (res.data.Status === "Success") {
+          alert("Pomyślnie dodano notatkę do bazy danych")
+          navigate('/');
+
+        } else {
+          alert(res.data.Massage)
+        }
+      })
+      .catch(err => console.group(err));
+  }
   // function expand() {
   //   setExpanded(true);
   // }
 
   return (
     <div>
-      <form className="create-note">
+      <form className="create-note" onSubmit={handleSubmit}>
 
         <input
           name="title"

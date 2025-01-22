@@ -104,6 +104,41 @@ app.post('/registration', (req, res) => {
     })
 })
 
+app.post('/savetodatabase', (req, res) => {
+
+    const user_id = 'SELECT id FROM users WHERE email=:';
+
+    console.log("User id", user_id);
+
+    // const sql = 'INSERT INTO notes (user_id, title, note) VALUES (?,?,?)';
+    // db.query(sql, [req.body.name, req.body.title, req.body.content], (err, data) => {
+    //     if (err) return res.json({
+    //         Massage: "Server Side Error"
+    //     })
+    //     else {
+    //         return res.json({
+    //             Status: "Success"
+    //         })
+    //     }
+    //     // if (data.length > 0) {
+    //     //     const name = data[0].name;
+    //     //     const token = jwt.sign({
+    //     //         name
+    //     //     }, "our-jsonwebtoken-secret-key", {
+    //     //         expiresIn: '1d'
+    //     //     });
+    //     //     res.cookie('token', token);
+    //     //     return res.json({
+    //     //         Status: "Success"
+    //     //     })
+    //     // } else {
+    //     //     return res.json({
+    //     //         Message: "No Records existed"
+    //     //     });
+    //     // }
+    // })
+})
+
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
     return res.json({
