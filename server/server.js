@@ -50,18 +50,38 @@ app.get('/', verifyUser, (req, res) => {
 
 
 app.post('/login', (req, res) => {
+
+    // const user_id = 'SELECT id FROM users WHERE email = ?';
+    // db.query(user_id, [req.body.email], (err, data) => {
+    //     if (err) return res.json({
+    //         Massage: "Server Side Error"
+    //     });
+    //     if (data.length > 0) {
+    //         console.log(data);
+    //     } else {
+    //         return res.json({
+    //             Message: "No Records existed"
+    //         });
+    //     }
+    // })
+
     const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
+
+    // const user_id = req.body.id
+
     db.query(sql, [req.body.email, req.body.password], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
         });
         if (data.length > 0) {
             const name = data[0].name;
+            // window.id = data[0].id;
             const token = jwt.sign({
                 name
             }, "our-jsonwebtoken-secret-key", {
                 expiresIn: '1d'
             });
+            // console.log("ID USER: ", id);
             res.cookie('token', token);
             return res.json({
                 Status: "Success"
@@ -73,6 +93,8 @@ app.post('/login', (req, res) => {
         }
     })
 })
+
+
 
 app.post('/registration', (req, res) => {
     const sql = 'INSERT INTO users (name, email, password) VALUES (?,?,?)';
@@ -106,9 +128,9 @@ app.post('/registration', (req, res) => {
 
 app.post('/savetodatabase', (req, res) => {
 
-    const user_id = 'SELECT id FROM users WHERE email=:';
+    // const user_id = window.id;
 
-    console.log("User id", user_id);
+    // console.log("User id FROM SAVE TO DATABASE: ", user_id);
 
     // const sql = 'INSERT INTO notes (user_id, title, note) VALUES (?,?,?)';
     // db.query(sql, [req.body.name, req.body.title, req.body.content], (err, data) => {
