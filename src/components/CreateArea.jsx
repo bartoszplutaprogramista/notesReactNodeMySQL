@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
+import axios from 'axios';
 
 function CreateArea(props) {
   // const [isExpanded, setExpanded] = useState(false);
@@ -10,6 +11,8 @@ function CreateArea(props) {
     title: "",
     content: ""
   });
+
+  const [showError, setShowError] = useState("");
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -24,23 +27,28 @@ function CreateArea(props) {
 
   function submitNote(event) {
     props.onAdd(note);
-    setNote({
-      title: "",
-      content: ""
-    });
-    event.preventDefault();
+
+    // event.preventDefault();
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8081/savetodatabase', values)
+    axios.post('http://localhost:8081/savetodatabase', note)
+      // axios.post('http://localhost:8081/savetodatabase', values)
       .then(res => {
         if (res.data.Status === "Success") {
-          alert("Pomyślnie dodano notatkę do bazy danych")
-          navigate('/');
+          // console.log("user_id wynsoi po dodaniu do bazy:" )
+          // alert("Pomyślnie dodano notatkę do bazy danych");
+          setShowError("Pomyślnie dodano do bazy! ");
+          setNote({
+            title: "",
+            content: ""
+          });
+          // navigate('/');
 
         } else {
-          alert(res.data.Massage)
+          alert("Nie dodano");
+          // alert("Nie dodano", res.data.Massage)
         }
       })
       .catch(err => console.group(err));
@@ -49,13 +57,23 @@ function CreateArea(props) {
   //   setExpanded(true);
   // }
 
+  // function change() {
+  //   { handleChange };
+  //   { e => setValues({ ...note, title: e.target.value }) };
+  // }
+
   return (
     <div>
       <form className="create-note" onSubmit={handleSubmit}>
 
         <input
           name="title"
-          onChange={handleChange}
+          onChange={e => {
+            setNote({ ...note, title: e.target.value });
+            { handleChange };
+            setShowError("");
+          }}
+          // onChange={change()}
           value={note.title}
           placeholder="Title"
         />
@@ -64,14 +82,22 @@ function CreateArea(props) {
         <textarea
           name="content"
 
-          onChange={handleChange}
+          onChange={e => {
+            setNote({ ...note, content: e.target.value });
+            { handleChange };
+            setShowError("");
+          }}
           value={note.content}
           placeholder="Take a note..."
           rows="3"
         />
 
-        <button onClick={submitNote}><AddIcon /></button>
+        {/* <button onClick={submitNote} type='submit'><AddIcon /></button> */}
+        <button type='submit' onClick={submitNote}><AddIcon /></button>
       </form>
+      <div className="d-flex justify-content-center">
+        {showError}
+      </div>
     </div>
   );
 }

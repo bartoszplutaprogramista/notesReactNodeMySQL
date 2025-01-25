@@ -10,6 +10,7 @@ import { Routes } from 'react-router';
 import Home from './Home';
 import Login from './Login';
 import Registration from './Registration';
+// import CreateArea from './CreateArea';
 
 function App() {
   // const [notes, setNotes] = useState([]);
@@ -35,6 +36,7 @@ function App() {
           <Route path='/' element={<Home />}></Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/registration' element={<Registration />}></Route>
+          <Route path='/savetodatabase' element={<CreateArea />}></Route>
         </Routes>
         {/* <Header /> */}
         {/* <CreateArea onAdd={addNote} />

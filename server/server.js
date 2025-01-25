@@ -13,6 +13,8 @@ app.use(cors({
     credentials: true
 }))
 
+let user_id = 0;
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -76,6 +78,7 @@ app.post('/login', (req, res) => {
         if (data.length > 0) {
             const name = data[0].name;
             // window.id = data[0].id;
+            user_id = data[0].id;
             const token = jwt.sign({
                 name
             }, "our-jsonwebtoken-secret-key", {
@@ -130,7 +133,26 @@ app.post('/savetodatabase', (req, res) => {
 
     // const user_id = window.id;
 
+
+
+    console.log("WARTOŚĆ title: ", req.body.title);
+    console.log("WARTOŚĆ content: ", req.body.content);
+
+    return res.json({
+        Status: "Success"
+    })
+
     // console.log("User id FROM SAVE TO DATABASE: ", user_id);
+    // console.log("User id FROM SAVE TO DATABASE: ");
+    // console.log(res);
+
+    // return res.json({
+    //     Massage: "Server Side Error"
+    // })
+
+    // res.json({
+    //     Massage: "User id FROM SAVE TO DATABASE: "
+    // })
 
     // const sql = 'INSERT INTO notes (user_id, title, note) VALUES (?,?,?)';
     // db.query(sql, [req.body.name, req.body.title, req.body.content], (err, data) => {
