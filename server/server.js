@@ -133,14 +133,42 @@ app.post('/savetodatabase', (req, res) => {
 
     // const user_id = window.id;
 
+    let noteIdVar = 0;
+    const note_id2 = 'SELECT MAX(note_id) AS idNote FROM notes WHERE user_id = ?';
+    db.query(note_id2, [user_id], (err, data) => {
+        if (err) return res.json({
+            Massage: "Server Side Error"
+        })
+        else {
+            noteIdVar = data[0].idNote;
+            console.log("NOTE ID WYNOSI in: ", data[0].idNote);
+            // return data;
+
+        }
+    })
+
+    console.log("NOTE ID WYNOSI outside: ", noteIdVar);
+
+
+    const sql = 'INSERT INTO notes (user_id, note_id, title, note) VALUES (?, ?, ?, ?)';
+    db.query(sql, [user_id, note_id2, req.body.title, req.body.content], (err, data) => {
+        if (err) return res.json({
+            Massage: "Server Side Error"
+        })
+        else {
+            return res.json({
+                Status: "Success"
+            })
+        }
+    })
 
 
     console.log("WARTOŚĆ title: ", req.body.title);
     console.log("WARTOŚĆ content: ", req.body.content);
 
-    return res.json({
-        Status: "Success"
-    })
+    // return res.json({
+    //     Status: "Success"
+    // })
 
     // console.log("User id FROM SAVE TO DATABASE: ", user_id);
     // console.log("User id FROM SAVE TO DATABASE: ");
@@ -181,6 +209,28 @@ app.post('/savetodatabase', (req, res) => {
     //     //     });
     //     // }
     // })
+})
+
+app.post('/deletenote', (req, res) => {
+
+    // 'DELETE FROM notes WHERE id = ?'
+
+    // const sql = 'DELETE FROM notes WHERE id = ?';
+    // db.query(sql, [note_id], (err, data) => {
+    //     if (err) return res.json({
+    //         Massage: "Server Side Error"
+    //     })
+    //     else {
+    //         return res.json({
+    //             Status: "Success"
+    //         })
+    //     }
+    // })
+
+    console.log("JESTEM W SERVER2");
+    return res.json({
+        Status: "Success"
+    })
 })
 
 app.get('/logout', (req, res) => {
