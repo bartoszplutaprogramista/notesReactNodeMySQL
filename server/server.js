@@ -3,10 +3,15 @@ import mysql from 'mysql';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
+import $ from "jquery";
+// import bodyParser from "body-parser";
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 app.use(cors({
     origin: ["http://localhost:5173"],
     methods: ["POST, GET"],
@@ -15,12 +20,14 @@ app.use(cors({
 
 let user_id = 0;
 
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "notes_db"
 })
+
 
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
@@ -129,29 +136,28 @@ app.post('/registration', (req, res) => {
     })
 })
 
-app.post('/savetodatabase', (req, res) => {
 
-    // const user_id = window.id;
+app.post('/savetodatabase', async (req, res) => {
+    let noteIdVar;
 
-    let noteIdVar = 0;
-    const note_id2 = 'SELECT MAX(note_id) AS idNote FROM notes WHERE user_id = ?';
-    db.query(note_id2, [user_id], (err, data) => {
-        if (err) return res.json({
-            Massage: "Server Side Error"
-        })
-        else {
-            noteIdVar = data[0].idNote;
-            console.log("NOTE ID WYNOSI in: ", data[0].idNote);
-            // return data;
+    try {
+        // const user_id = req.body.user_id; // Przykładowe uzyskanie user_id z zapytania
+        noteIdVar = await getNoteId(user_id);
+        console.log("NOTE ID WYNOSI outside NOTEID: ", noteIdVar); // wartość uzyskana
+        // res.json({
+        //     noteId: noteIdVar
+        // });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({
+            Message: "Server Side Error"
+        });
+    }
 
-        }
-    })
-
-    console.log("NOTE ID WYNOSI outside: ", noteIdVar);
-
-
+    console.log("user_id: ", user_id);
+    noteIdVar++;
     const sql = 'INSERT INTO notes (user_id, note_id, title, note) VALUES (?, ?, ?, ?)';
-    db.query(sql, [user_id, note_id2, req.body.title, req.body.content], (err, data) => {
+    db.query(sql, [user_id, noteIdVar, req.body.title, req.body.content], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
         })
@@ -162,54 +168,18 @@ app.post('/savetodatabase', (req, res) => {
         }
     })
 
+    console.log("NOTE ID WYNOSI outside CAŁKIEM NA ZEWNĄTRZ NOTEID: ", noteIdVar);
+});
 
-    console.log("WARTOŚĆ title: ", req.body.title);
-    console.log("WARTOŚĆ content: ", req.body.content);
-
-    // return res.json({
-    //     Status: "Success"
-    // })
-
-    // console.log("User id FROM SAVE TO DATABASE: ", user_id);
-    // console.log("User id FROM SAVE TO DATABASE: ");
-    // console.log(res);
-
-    // return res.json({
-    //     Massage: "Server Side Error"
-    // })
-
-    // res.json({
-    //     Massage: "User id FROM SAVE TO DATABASE: "
-    // })
-
-    // const sql = 'INSERT INTO notes (user_id, title, note) VALUES (?,?,?)';
-    // db.query(sql, [req.body.name, req.body.title, req.body.content], (err, data) => {
-    //     if (err) return res.json({
-    //         Massage: "Server Side Error"
-    //     })
-    //     else {
-    //         return res.json({
-    //             Status: "Success"
-    //         })
-    //     }
-    //     // if (data.length > 0) {
-    //     //     const name = data[0].name;
-    //     //     const token = jwt.sign({
-    //     //         name
-    //     //     }, "our-jsonwebtoken-secret-key", {
-    //     //         expiresIn: '1d'
-    //     //     });
-    //     //     res.cookie('token', token);
-    //     //     return res.json({
-    //     //         Status: "Success"
-    //     //     })
-    //     // } else {
-    //     //     return res.json({
-    //     //         Message: "No Records existed"
-    //     //     });
-    //     // }
-    // })
-})
+const getNoteId = (user_id) => {
+    return new Promise((resolve, reject) => {
+        const note_id2 = 'SELECT MAX(note_id) AS idNote FROM notes WHERE user_id = ?';
+        db.query(note_id2, [user_id], (err, data) => {
+            if (err) return reject(err);
+            resolve(data[0].idNote);
+        });
+    });
+};
 
 app.post('/deletenote', (req, res) => {
 
@@ -243,3 +213,7 @@ app.get('/logout', (req, res) => {
 app.listen(8081, () => {
     console.log("Running...");
 })
+// module.exports = {
+//     db,
+//     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+// };
