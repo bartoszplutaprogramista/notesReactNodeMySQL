@@ -205,8 +205,28 @@ app.post('/deletenote', (req, res) => {
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
+    user_id = 0;
     return res.json({
         Status: "Success"
+    })
+})
+
+app.get('/getAllNotes', (req, res) => {
+    const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote FROM notes WHERE user_id = ?';
+    db.query(sql, [user_id], (err, data) => {
+        if (err) return res.json({
+            Massage: "Server Side Error"
+        })
+        if ((data.length > 0) && (user_id > 0)) {
+            res.json(data);
+            // return res.json({
+            //     Status: "Success"
+            // })
+        } else {
+            return res.json({
+                Message: "No Records existed"
+            });
+        }
     })
 })
 

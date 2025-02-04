@@ -26,7 +26,19 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
-    props.onAdd(note);
+    // window.location.reload(false);
+
+
+    // useEffect(() => {
+    //   axios.get('http://localhost:8081/getAllNotes')
+    //     .then(response => {
+    //       setData(response.data);
+    //     })
+    //     .catch(error => {
+    //       console.error('Błąd przy pobieraniu danych: ', error);
+    //     });
+    // }, []);
+    // props.onAdd(note);
 
     // event.preventDefault();
   }

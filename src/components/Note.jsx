@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateArea from "./CreateArea";
 import axios from 'axios';
@@ -6,8 +6,12 @@ import axios from 'axios';
 
 
 function Note(props) {
+
+  const [data, setData] = useState([]);
+
   function handleClick() {
     // event.preventDefault();
+    console.log("props.id wynosi usunięty:", props.id);
     props.onDelete(props.id);
 
   }
@@ -23,9 +27,17 @@ function Note(props) {
   // // setNote({ ...note, content: { props.content } });
 
   // setIdNote(props.id);
-  console.log("props.id wynosi:", props.id);
 
 
+  useEffect(() => {
+    axios.get('http://localhost:8081/getAllNotes')
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.error('Błąd przy pobieraniu danych: ', error);
+      });
+  }, []);
 
   // const [showInfo, setShowInfo] = useState("");
 
@@ -59,27 +71,75 @@ function Note(props) {
   // onClick={handleClick}
   // }
 
+
   return (
-    <div className="note">
-      <form onSubmit={handleSubmit}>
-        {/* <input value="props.title"></input> */}
-        <h1>{props.title}</h1>
-        {/* <input value="props.content"></input> */}
-        <p>{props.content}</p>
-        {/* <input value="props.title"></input>
-        <input value="props.content"></input> */}
+    <div>
+      {props.length > 0 ? (
+        props.data.map((item) => (
+          <div className="note" key={index}>
+            <h1>{item.titleOfNote}</h1>
+            <p>{item.noteOfNote}</p>
+          </div>
+        ))
+      ) : (
+        <p></p>
+      )}
+    </div>
 
-        {/* <button type='submit' onClick={handleClick}> */}
-        <button type="submit" >
+    //  <div>
+    // {data.length > 0 ? (
+    //   data.map((item, index) => (
+    //     <div className="note" key={index}>
+    //       <h1>{item.titleOfNote}</h1>
+    //       <p>{item.noteOfNote}</p>
+    //     </div>
+    //   ))
+    // ) : (
+    //   <p></p>
+    // )}
+    // </div> 
 
-          <DeleteIcon />
-        </button>
-      </form>
-      <div className="d-flex justify-content-center">
-        {/* {showInfo} */}
-      </div>
-    </div >
+    // <form onSubmit={handleSubmit}>
+
+    //   {/* <input value="props.title"></input> */}
+    //   <h1>{props[0].titleOfNote}</h1>
+    //   {/* <input value="props.content"></input> */}
+    //   <p>{props[0].noteOfNote}</p>
+    //   {/* <input value="props.title"></input>
+    //     <input value="props.content"></input> */}
+
+    //   {/* <button type='submit' onClick={handleClick}> */}
+    //   <button type="submit" >
+
+    //     <DeleteIcon />
+    //   </button>
+    // </form>
+
   );
 }
+
+
+
+
+//       <form onSubmit={handleSubmit}>
+//         {/* <input value="props.title"></input> */}
+//         <h1>{props.title}</h1>
+//         {/* <input value="props.content"></input> */}
+//         <p>{props.content}</p>
+//         {/* <input value="props.title"></input>
+//         <input value="props.content"></input> */}
+
+//         {/* <button type='submit' onClick={handleClick}> */}
+//         <button type="submit" >
+
+//           <DeleteIcon />
+//         </button>
+//       </form>
+//       <div className="d-flex justify-content-center">
+//         {/* {showInfo} */}
+//       </div>
+//     </div >
+//   );
+// }
 
 export default Note;
