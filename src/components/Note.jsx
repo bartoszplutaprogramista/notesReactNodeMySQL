@@ -5,14 +5,14 @@ import axios from 'axios';
 
 
 
-function Note(props) {
+function Note({ data }) {
 
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
   function handleClick() {
     // event.preventDefault();
-    console.log("props.id wynosi usunięty:", props.id);
-    props.onDelete(props.id);
+    // console.log("props.id wynosi usunięty:", props.id);
+    // props.onDelete(props.id);
 
   }
 
@@ -29,15 +29,15 @@ function Note(props) {
   // setIdNote(props.id);
 
 
-  useEffect(() => {
-    axios.get('http://localhost:8081/getAllNotes')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Błąd przy pobieraniu danych: ', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:8081/getAllNotes')
+  //     .then(response => {
+  //       setData(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Błąd przy pobieraniu danych: ', error);
+  //     });
+  // }, []);
 
   // const [showInfo, setShowInfo] = useState("");
 
@@ -71,11 +71,29 @@ function Note(props) {
   // onClick={handleClick}
   // }
 
+  // const { dataProps } = props;
+
+  // Wyświetlanie danych w konsoli
+  console.log('Data received via props:', { data });
+  console.log('Data length: ', data.length);
 
   return (
+    // <div>
+    //   {props.length > 0 ? (
+    //     props.data.map((item) => (
+    //       <div className="note" key={index}>
+    //         <h1>{item.titleOfNote}</h1>
+    //         <p>{item.noteOfNote}</p>
+    //       </div>
+    //     ))
+    //   ) : (
+    //     <p></p>
+    //   )}
+    // </div>
+
     <div>
-      {props.length > 0 ? (
-        props.data.map((item) => (
+      {data.length > 0 ? (
+        data.map((item, index) => (
           <div className="note" key={index}>
             <h1>{item.titleOfNote}</h1>
             <p>{item.noteOfNote}</p>
@@ -85,19 +103,6 @@ function Note(props) {
         <p></p>
       )}
     </div>
-
-    //  <div>
-    // {data.length > 0 ? (
-    //   data.map((item, index) => (
-    //     <div className="note" key={index}>
-    //       <h1>{item.titleOfNote}</h1>
-    //       <p>{item.noteOfNote}</p>
-    //     </div>
-    //   ))
-    // ) : (
-    //   <p></p>
-    // )}
-    // </div> 
 
     // <form onSubmit={handleSubmit}>
 

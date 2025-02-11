@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export default function Login() {
     const [values, setValues] = useState({
         email: "",
-        passwords: ""
+        password: ""
     })
 
     const navigate = useNavigate();

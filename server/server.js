@@ -4,10 +4,11 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
 import $ from "jquery";
+import session from 'express-session';
 // import bodyParser from "body-parser";
 
 const app = express();
-app.use(express.json());
+
 app.use(cookieParser());
 // app.use(bodyParser.urlencoded({
 //     extended: true
@@ -17,6 +18,17 @@ app.use(cors({
     methods: ["POST, GET"],
     credentials: true
 }))
+
+app.use(session({
+    secret: 'my-secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: false
+    }
+}));
+
+app.use(express.json());
 
 let user_id = 0;
 
@@ -43,7 +55,10 @@ const verifyUser = (req, res, next) => {
                 })
             } else {
                 req.name = decoded.name;
-                next()
+                // user_id = decoded.id;
+                // user_id = decoded.id;
+                // console.log("ID W SERVER: ", user_id);
+                next();
             }
         })
     }
@@ -54,6 +69,7 @@ app.get('/', verifyUser, (req, res) => {
     return res.json({
         Status: "Success",
         name: req.name
+        // user_id: req.id
     })
 })
 
@@ -86,6 +102,16 @@ app.post('/login', (req, res) => {
             const name = data[0].name;
             // window.id = data[0].id;
             user_id = data[0].id;
+            // req.session.user = data[0].id;
+            // req.session.isLoggedIn = true;
+            // req.session.save();
+            // req.session.user = {
+            //     idUser: data[0].id,
+            //     isLoggedIn: true
+            // };
+            // req.session.idUser = data[0].id;
+            // req.session.save();
+            // const userIdSession = req.session.idUser;
             const token = jwt.sign({
                 name
             }, "our-jsonwebtoken-secret-key", {
@@ -162,6 +188,7 @@ app.post('/savetodatabase', async (req, res) => {
             Massage: "Server Side Error"
         })
         else {
+            console.log('Data inserted, new row ID: ', data.insertId);
             return res.json({
                 Status: "Success"
             })
@@ -213,10 +240,19 @@ app.get('/logout', (req, res) => {
 
 app.get('/getAllNotes', (req, res) => {
     const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote FROM notes WHERE user_id = ?';
+    console.log('user_id wynosi w server ', user_id);
+    // if (req.session.user.idUser) {
+    //     console.log('userId SESSION wynosi w server ', req.session.user.idUser)
+    // }
+    // if (req.session.user.isLoggedIn) {
+    //     console.log('isLoggedIn SESSION wynosi w server ', req.session.user.isLoggedIn)
+    // }
+
     db.query(sql, [user_id], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
         })
+        // if ((data.length > 0) && (req.session.user.idUser > 0) && (req.session.user.isLoggedIn)) {
         if ((data.length > 0) && (user_id > 0)) {
             res.json(data);
             // return res.json({

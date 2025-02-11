@@ -3,6 +3,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
 import Zoom from "@material-ui/core/Zoom";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CreateArea(props) {
   // const [isExpanded, setExpanded] = useState(false);
@@ -13,6 +14,7 @@ function CreateArea(props) {
   });
 
   const [showError, setShowError] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -26,6 +28,12 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
+    props.onAdd(note);
+    // setNote({
+    //   title: "",
+    //   content: ""
+    // });
+    // event.preventDefault();
     // window.location.reload(false);
 
 
@@ -51,12 +59,17 @@ function CreateArea(props) {
         if (res.data.Status === "Success") {
           // console.log("user_id wynsoi po dodaniu do bazy:" )
           // alert("Pomyślnie dodano notatkę do bazy danych");
+
           setShowError("Pomyślnie dodano do bazy! ");
           setNote({
             title: "",
             content: ""
           });
-          // navigate('/');
+          console.log("res.data ", res.data);
+          // setData(res.data);
+          // navigate("/");
+          // window.location.reload();
+
 
         } else {
           alert("Nie dodano");
@@ -65,6 +78,7 @@ function CreateArea(props) {
       })
       .catch(err => console.group(err));
   }
+
   // function expand() {
   //   setExpanded(true);
   // }
@@ -80,6 +94,7 @@ function CreateArea(props) {
 
         <input
           name="title"
+          // onChange={handleChange}
           onChange={e => {
             setNote({ ...note, title: e.target.value });
             { handleChange };
@@ -93,7 +108,7 @@ function CreateArea(props) {
 
         <textarea
           name="content"
-
+          // onChange={handleChange}
           onChange={e => {
             setNote({ ...note, content: e.target.value });
             { handleChange };

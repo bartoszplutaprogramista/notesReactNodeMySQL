@@ -10,6 +10,7 @@ export default function Home() {
     const [auth, setAuth] = useState(false);
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
+    const [dataAll, setData] = useState([]);
 
     axios.defaults.withCredentials = true;
     useEffect(() => {
@@ -54,6 +55,16 @@ export default function Home() {
         });
     }
 
+    useEffect(() => {
+        axios.get('http://localhost:8081/getAllNotes')
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('Błąd przy pobieraniu danych: ', error);
+            });
+    }, []);
+
     return (
         <div className='mt-4'>
             {
@@ -63,7 +74,8 @@ export default function Home() {
                         <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
                         <Header />
                         <CreateArea onAdd={addNote} />
-                        {notes.map((noteItem, index) => {
+                        <Note data={dataAll} />
+                        {/* {notes.map((noteItem, index) => {
                             return (
                                 <Note
                                     key={index}
@@ -73,7 +85,7 @@ export default function Home() {
                                     onDelete={deleteNote}
                                 />
                             );
-                        })}
+                        })} */}
                         <Footer />
                     </div>
                     :

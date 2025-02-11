@@ -30,19 +30,19 @@ function App() {
   //   });
   // }
 
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://localhost:8081/getAllNotes')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error('Błąd przy pobieraniu danych: ', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:8081/getAllNotes')
+  //     .then(response => {
+  //       setData(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Błąd przy pobieraniu danych: ', error);
+  //     });
+  // }, []);
 
-  // console.log("Zmienna tytuł w App ", data[1]);
+  // console.log("Zmienna tytuł w App ", data);
 
   return (
     <div>
@@ -58,7 +58,10 @@ function App() {
       )} */}
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<><Home /><Note data={data} /></>}></Route>
+
+          {/* <Route path='/' element={<><Home /><Note data={data} /></>}></Route> */}
+          <Route path='/' element={<Home />}></Route>
+          {/* <Route path='/' element={<Note data={data} />}></Route>*/}
           <Route path='/login' element={<Login />}></Route>
           <Route path='/registration' element={<Registration />}></Route>
           <Route path='/savetodatabase' element={<CreateArea />}></Route>
