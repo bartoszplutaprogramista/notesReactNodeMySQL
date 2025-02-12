@@ -5,7 +5,8 @@ import Zoom from "@material-ui/core/Zoom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function CreateArea(props) {
+// function CreateArea(props) {
+function CreateArea({ onAdd }) {
   // const [isExpanded, setExpanded] = useState(false);
 
   const [note, setNote] = useState({
@@ -28,7 +29,7 @@ function CreateArea(props) {
   }
 
   function submitNote(event) {
-    props.onAdd(note);
+    // props.onAdd(note);
     // setNote({
     //   title: "",
     //   content: ""
@@ -61,6 +62,7 @@ function CreateArea(props) {
           // alert("Pomyślnie dodano notatkę do bazy danych");
 
           setShowError("Pomyślnie dodano do bazy! ");
+          onAdd();
           setNote({
             title: "",
             content: ""

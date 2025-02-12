@@ -41,6 +41,16 @@ export default function Home() {
 
     const [notes, setNotes] = useState([]);
 
+    const fetchData = () => {
+        axios.get('http://localhost:8081/getAllNotes')
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    };
+
     function addNote(newNote) {
         setNotes(prevNotes => {
             return [...prevNotes, newNote];
@@ -73,7 +83,8 @@ export default function Home() {
                         <h3>You are Authorized {name}</h3>
                         <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
                         <Header />
-                        <CreateArea onAdd={addNote} />
+                        {/* <CreateArea onAdd={addNote} /> */}
+                        <CreateArea onAdd={fetchData} />
                         <Note data={dataAll} />
                         {/* {notes.map((noteItem, index) => {
                             return (
