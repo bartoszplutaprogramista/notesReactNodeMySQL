@@ -210,19 +210,20 @@ const getNoteId = (user_id) => {
 
 app.post('/deletenote', (req, res) => {
 
-    // 'DELETE FROM notes WHERE id = ?'
+    const note_id = req.body.idOfNote;
+    console.log("NOTE ID WYNOSI: ", note_id);
 
-    // const sql = 'DELETE FROM notes WHERE id = ?';
-    // db.query(sql, [note_id], (err, data) => {
-    //     if (err) return res.json({
-    //         Massage: "Server Side Error"
-    //     })
-    //     else {
-    //         return res.json({
-    //             Status: "Success"
-    //         })
-    //     }
-    // })
+    const sql = 'DELETE FROM notes WHERE id = ?';
+    db.query(sql, [note_id], (err, data) => {
+        if (err) return res.json({
+            Massage: "Server Side Error"
+        })
+        else {
+            return res.json({
+                Status: "Success"
+            })
+        }
+    })
 
     console.log("JESTEM W SERVER2");
     return res.json({

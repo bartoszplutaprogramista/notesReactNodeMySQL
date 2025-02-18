@@ -41,8 +41,8 @@ function Note({ data }) {
 
   // const [showInfo, setShowInfo] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleDelete = (id) => {
+    // e.preventDefault();
     axios.post('http://localhost:8081/deletenote')
       // axios.post('http://localhost:8081/savetodatabase', values)
       .then(res => {
@@ -94,15 +94,25 @@ function Note({ data }) {
     <div>
       {data.length > 0 ? (
         data.map((item, index) => (
+
           <div className="note" key={index}>
-            <h1>{item.titleOfNote}</h1>
-            <p>{item.noteOfNote}</p>
+            <form onSubmit={() => handleDelete(item.idOfNote)}>
+              <h1>{item.titleOfNote}</h1>
+              <p>{item.noteOfNote}</p>
+              {/* <button onClick={() => handleDelete(item.id)}> */}
+              <p name="idOfNote">{item.idOfNote}</p>
+              <button type="submit">
+                <DeleteIcon />
+              </button>
+            </form>
           </div>
+
         ))
       ) : (
         <p></p>
-      )}
-    </div>
+      )
+      }
+    </div >
 
     // <form onSubmit={handleSubmit}>
 
