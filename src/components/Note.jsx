@@ -5,9 +5,9 @@ import axios from 'axios';
 
 
 
-function Note({ data }) {
+function Note({ data, fetchData }) {
 
-  // const [data, setData] = useState([]);
+  const [value, setData] = useState();
 
   function handleClick() {
     // event.preventDefault();
@@ -43,16 +43,16 @@ function Note({ data }) {
 
   const handleDelete = (id) => {
     // e.preventDefault();
-    axios.post('http://localhost:8081/deletenote')
+    axios.post('http://localhost:8081/deletenote', { id })
       // axios.post('http://localhost:8081/savetodatabase', values)
       .then(res => {
         if (res.data.Status === "Success") {
           // console.log("user_id wynsoi po dodaniu do bazy:" )
           // alert("Pomyślnie dodano notatkę do bazy danych");
           // setShowInfo("Pomyślnie usunięto z bazy! ");
-
+          fetchData();
           console.log("USUNIĘTO!");
-          handleClick();
+          // handleClick();
           // setNote({
           //   title: "",
           //   content: ""
@@ -65,7 +65,7 @@ function Note({ data }) {
         }
       })
       .catch(err => console.group(err));
-  }
+  };
 
   // function send(){
   // onClick={handleClick}
@@ -96,23 +96,32 @@ function Note({ data }) {
         data.map((item, index) => (
 
           <div className="note" key={index}>
-            <form onSubmit={() => handleDelete(item.idOfNote)}>
-              <h1>{item.titleOfNote}</h1>
-              <p>{item.noteOfNote}</p>
-              {/* <button onClick={() => handleDelete(item.id)}> */}
-              <p name="idOfNote">{item.idOfNote}</p>
-              <button type="submit">
+            {/* <form onSubmit={(e) => { */}
+            {/* // e.preventDefault(); */}
+            {/* handleDelete(item.idOfNote);
+            }}> */}
+            <h1>{item.titleOfNote}</h1>
+            <p>{item.noteOfNote}</p>
+            {/* <button onClick={() => handleDelete(item.id)}> */}
+            <p name="idOfNote">{item.idOfNote}</p>
+            {/* <input type="text" name="idOfNote" onChange={e => setData({ ...value: item.idOfNote })} /> */}
+            {/* <button type="submit">
                 <DeleteIcon />
-              </button>
-            </form>
+              </button> */}
+            <button onClick={() => handleDelete(item.idOfNote)}>
+              <DeleteIcon />
+            </button>
+            {/* </form> */}
           </div>
 
         ))
       ) : (
-        <p></p>
+        <p>Nie ma żadnych notatek</p>
       )
       }
     </div >
+
+
 
     // <form onSubmit={handleSubmit}>
 

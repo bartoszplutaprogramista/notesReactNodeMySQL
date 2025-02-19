@@ -210,7 +210,7 @@ const getNoteId = (user_id) => {
 
 app.post('/deletenote', (req, res) => {
 
-    const note_id = req.body.idOfNote;
+    const note_id = req.body.id;
     console.log("NOTE ID WYNOSI: ", note_id);
 
     const sql = 'DELETE FROM notes WHERE id = ?';
@@ -225,10 +225,10 @@ app.post('/deletenote', (req, res) => {
         }
     })
 
-    console.log("JESTEM W SERVER2");
-    return res.json({
-        Status: "Success"
-    })
+    // console.log("JESTEM W SERVER2");
+    // return res.json({
+    //     Status: "Success"
+    // })
 })
 
 app.get('/logout', (req, res) => {

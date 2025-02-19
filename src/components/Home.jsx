@@ -26,7 +26,7 @@ export default function Home() {
                 }
 
             })
-    })
+    }, []);
 
     const handleLogout = () => {
         axios.get('http://localhost:8081/logout')
@@ -65,14 +65,17 @@ export default function Home() {
         });
     }
 
+    // useEffect(() => {
+    //     axios.get('http://localhost:8081/getAllNotes')
+    //         .then(response => {
+    //             setData(response.data);
+    //         })
+    //         .catch(error => {
+    //             console.error('Błąd przy pobieraniu danych: ', error);
+    //         });
+    // }, []);
     useEffect(() => {
-        axios.get('http://localhost:8081/getAllNotes')
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error('Błąd przy pobieraniu danych: ', error);
-            });
+        fetchData();
     }, []);
 
     return (
@@ -85,7 +88,7 @@ export default function Home() {
                         <Header />
                         {/* <CreateArea onAdd={addNote} /> */}
                         <CreateArea onAdd={fetchData} />
-                        <Note data={dataAll} />
+                        <Note data={dataAll} fetchData={fetchData} />
                         {/* {notes.map((noteItem, index) => {
                             return (
                                 <Note
