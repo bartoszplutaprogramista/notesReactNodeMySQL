@@ -33,7 +33,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-let user_id = 0;
+// let user_id = 0;
 
 
 const db = mysql.createConnection({
@@ -58,7 +58,7 @@ const verifyUser = (req, res, next) => {
                 })
             } else {
                 req.name = decoded.name;
-                // user_id = decoded.id;
+                req.user_id = decoded.id;
                 // user_id = decoded.id;
                 // console.log("ID W SERVER: ", user_id);
                 next();
@@ -71,8 +71,8 @@ const verifyUser = (req, res, next) => {
 app.get('/', verifyUser, (req, res) => {
     return res.json({
         Status: "Success",
-        name: req.name
-        // user_id: req.id
+        name: req.name,
+        user_id: req.user_id
     })
 })
 
@@ -93,6 +93,8 @@ app.post('/login', (req, res) => {
     //     }
     // })
 
+    // dodatkowy text dfc
+
     const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
 
     // const user_id = req.body.id
@@ -104,7 +106,7 @@ app.post('/login', (req, res) => {
         if (data.length > 0) {
             const name = data[0].name;
             // window.id = data[0].id;
-            user_id = data[0].id;
+            const user_id = data[0].id;
             // req.session.user = data[0].id;
             // req.session.isLoggedIn = true;
             // req.session.save();
@@ -122,6 +124,7 @@ app.post('/login', (req, res) => {
             });
             // console.log("ID USER: ", id);
             res.cookie('token', token);
+            req.session.user_id = user_id;
             return res.json({
                 Status: "Success"
             })
@@ -167,7 +170,13 @@ app.post('/registration', (req, res) => {
 
 
 app.post('/savetodatabase', async (req, res) => {
+    if (!req.session.user_id) {
+        return res.json({
+            Massage: "User is not logged in"
+        });
+    }
     let noteIdVar;
+    const user_id = req.session.user_id;
 
     try {
         // const user_id = req.body.user_id; // Przykładowe uzyskanie user_id z zapytania
@@ -236,13 +245,22 @@ app.post('/deletenote', (req, res) => {
 
 app.get('/logout', (req, res) => {
     res.clearCookie('token');
-    user_id = 0;
+    req.session.destroy();
+    // user_id = 0;
     return res.json({
         Status: "Success"
     })
 })
 
 app.get('/getAllNotes', (req, res) => {
+    if (!req.session.user_id) {
+        return res.json({
+            Massage: "User is not logged in"
+        });
+    }
+
+    const user_id = req.session.user_id;
+
     const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote FROM notes WHERE user_id = ?';
     console.log('user_id wynosi w server ', user_id);
     // if (req.session.user.idUser) {
