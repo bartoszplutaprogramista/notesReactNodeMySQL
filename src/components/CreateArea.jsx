@@ -54,7 +54,10 @@ function CreateArea({ onAdd }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8081/savetodatabase', note)
+    axios.post('http://localhost:8081/savetodatabase', note, {
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
+    })
       // axios.post('http://localhost:8081/savetodatabase', values)
       .then(res => {
         if (res.data.Status === "Success") {
@@ -122,7 +125,7 @@ function CreateArea({ onAdd }) {
         />
 
         {/* <button onClick={submitNote} type='submit'><AddIcon /></button> */}
-        <button type='submit' onClick={submitNote}><AddIcon /></button>
+        <button type='submit'><AddIcon /></button>
       </form>
       <div className="d-flex justify-content-center">
         {showError}

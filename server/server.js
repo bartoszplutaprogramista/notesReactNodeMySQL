@@ -29,6 +29,9 @@ app.use(session({
 }));
 
 app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
 
 let user_id = 0;
 

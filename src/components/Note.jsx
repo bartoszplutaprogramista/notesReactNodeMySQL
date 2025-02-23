@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateArea from "./CreateArea";
 import axios from 'axios';
+import { Buffer } from 'buffer';
 
 
 
@@ -40,6 +41,8 @@ function Note({ data, fetchData }) {
   // }, []);
 
   // const [showInfo, setShowInfo] = useState("");
+
+  const contentLength = Buffer.byteLength(JSON.stringify({ fetchData }));
 
   const handleDelete = (id) => {
     // e.preventDefault();
