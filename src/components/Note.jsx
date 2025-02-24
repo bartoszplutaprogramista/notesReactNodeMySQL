@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from '@mui/icons-material/Edit';
 import CreateArea from "./CreateArea";
 import axios from 'axios';
 import { Buffer } from 'buffer';
@@ -9,6 +10,9 @@ import { Buffer } from 'buffer';
 function Note({ data, fetchData }) {
 
   const [value, setData] = useState();
+  const [editNote, setEditNote] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
 
   function handleClick() {
     // event.preventDefault();
@@ -16,6 +20,11 @@ function Note({ data, fetchData }) {
     // props.onDelete(props.id);
 
   }
+  const handleEdit = (note) => {
+    setEditNote(note);
+    setEditTitle(note.titleOfNote);
+    setEditContent(note.noteOfNote);
+  };
 
   // const [note, setNote] = useState({
   //   title: "sdsdsd",
@@ -39,6 +48,23 @@ function Note({ data, fetchData }) {
   //       console.error('Błąd przy pobieraniu danych: ', error);
   //     });
   // }, []);
+  const handleSave = (id) => {
+    axios.post('http://localhost:8081/editnote', {
+      id,
+      title: editTitle,
+      content: editContent
+    })
+      .then(res => {
+        if (res.data.Status === "Success") {
+          fetchData();
+          setEditNote(null);
+          console.log("Zaktualizowano!");
+        } else {
+          alert("Nie zaktualizowano");
+        }
+      })
+      .catch(err => console.group(err));
+  };
 
   // const [showInfo, setShowInfo] = useState("");
 
@@ -81,67 +107,43 @@ function Note({ data, fetchData }) {
   console.log('Data length: ', data.length);
 
   return (
-    // <div>
-    //   {props.length > 0 ? (
-    //     props.data.map((item) => (
-    //       <div className="note" key={index}>
-    //         <h1>{item.titleOfNote}</h1>
-    //         <p>{item.noteOfNote}</p>
-    //       </div>
-    //     ))
-    //   ) : (
-    //     <p></p>
-    //   )}
-    // </div>
-
     <div>
       {data.length > 0 ? (
         data.map((item, index) => (
-
           <div className="note" key={index}>
-            {/* <form onSubmit={(e) => { */}
-            {/* // e.preventDefault(); */}
-            {/* handleDelete(item.idOfNote);
-            }}> */}
-            <h1>{item.titleOfNote}</h1>
-            <p>{item.noteOfNote}</p>
-            {/* <button onClick={() => handleDelete(item.id)}> */}
-            <p name="idOfNote">{item.idOfNote}</p>
-            {/* <input type="text" name="idOfNote" onChange={e => setData({ ...value: item.idOfNote })} /> */}
-            {/* <button type="submit">
-                <DeleteIcon />
-              </button> */}
-            <button onClick={() => handleDelete(item.idOfNote)}>
-              <DeleteIcon />
-            </button>
-            {/* </form> */}
-          </div>
+            {editNote && editNote.idOfNote === item.idOfNote ? (
+              <div>
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                />
+                <textarea
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                />
+                <button onClick={() => handleSave(item.idOfNote)}>Save</button>
+              </div>
+            ) : (
+              <div>
+                <h1>{item.titleOfNote}</h1>
+                <p>{item.noteOfNote}</p>
+                <p name="idOfNote">{item.idOfNote}</p>
+                <button onClick={() => handleDelete(item.idOfNote)}>
+                  <DeleteIcon />
+                </button>
+                <button onClick={() => handleEdit(item)}>
+                  <EditIcon />
+                </button>
 
+              </div>
+            )}
+          </div>
         ))
       ) : (
         <p>Nie ma żadnych notatek</p>
-      )
-      }
-    </div >
-
-
-
-    // <form onSubmit={handleSubmit}>
-
-    //   {/* <input value="props.title"></input> */}
-    //   <h1>{props[0].titleOfNote}</h1>
-    //   {/* <input value="props.content"></input> */}
-    //   <p>{props[0].noteOfNote}</p>
-    //   {/* <input value="props.title"></input>
-    //     <input value="props.content"></input> */}
-
-    //   {/* <button type='submit' onClick={handleClick}> */}
-    //   <button type="submit" >
-
-    //     <DeleteIcon />
-    //   </button>
-    // </form>
-
+      )}
+    </div>
   );
 }
 
