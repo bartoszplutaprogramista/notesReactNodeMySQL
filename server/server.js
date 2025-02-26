@@ -288,6 +288,25 @@ app.get('/getAllNotes', (req, res) => {
     })
 })
 
+app.post('/editnote', (req, res) => {
+    const {
+        id,
+        title,
+        content
+    } = req.body;
+    const sql = 'UPDATE notes SET title = ?, note = ? WHERE id = ?';
+    db.query(sql, [title, content, id], (err, data) => {
+        if (err) return res.json({
+            Message: "Server Side Error"
+        });
+        else {
+            return res.json({
+                Status: "Success"
+            });
+        }
+    });
+});
+
 app.listen(8081, () => {
     console.log("Running...");
 })

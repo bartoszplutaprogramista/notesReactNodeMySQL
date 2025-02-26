@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CreateArea from "./CreateArea";
 import axios from 'axios';
 import { Buffer } from 'buffer';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 
@@ -114,21 +115,23 @@ function Note({ data, fetchData }) {
             {editNote && editNote.idOfNote === item.idOfNote ? (
               <div>
                 <input
+                  className="edit-note"
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                 />
                 <textarea
+                  className="edit-note"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
                 />
-                <button onClick={() => handleSave(item.idOfNote)}>Save</button>
+                <button onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
               </div>
             ) : (
               <div>
                 <h1>{item.titleOfNote}</h1>
                 <p>{item.noteOfNote}</p>
-                <p name="idOfNote">{item.idOfNote}</p>
+                {/* <p name="idOfNote">{item.idOfNote}</p> */}
                 <button onClick={() => handleDelete(item.idOfNote)}>
                   <DeleteIcon />
                 </button>

@@ -101,3 +101,13 @@ form.create-note button {
   cursor: pointer;
   outline: none;
 }
+
+.edit-note{
+  width: 100%;
+  border: none;
+  /* padding: 4px; */
+  outline: none;
+  font-size: 1.1em;
+  font-family: inherit;
+  resize: none;
+}
