@@ -115,29 +115,37 @@ function Note({ data, fetchData }) {
             {editNote && editNote.idOfNote === item.idOfNote ? (
               <div>
                 <input
-                  className="edit-note"
+                  className="edit-note p-note-bold"
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
+                  maxLength="26"
                 />
                 <textarea
-                  className="edit-note"
+                  className="edit-note p-note"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
+                  maxLength="72"
                 />
-                <button onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
+                <div className="buttons-notes-edit">
+                  <button onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
+                </div>
               </div>
             ) : (
-              <div>
-                <h1>{item.titleOfNote}</h1>
-                <p>{item.noteOfNote}</p>
+              <div className="note-properties">
+                <p className="p-note-bold">{item.titleOfNote}</p>
+                <p className="p-note">{item.noteOfNote}</p>
                 {/* <p name="idOfNote">{item.idOfNote}</p> */}
-                <button onClick={() => handleDelete(item.idOfNote)}>
-                  <DeleteIcon />
-                </button>
-                <button onClick={() => handleEdit(item)}>
-                  <EditIcon />
-                </button>
+                <div className="buttons-notes">
+                  {/* <div className="buttons-notes"> */}
+                  <button onClick={() => handleEdit(item)}>
+                    <EditIcon />
+                  </button>
+                  <button onClick={() => handleDelete(item.idOfNote)}>
+                    <DeleteIcon />
+                  </button>
+                  {/* </div> */}
+                </div>
 
               </div>
             )}

@@ -42,18 +42,80 @@ footer p {
   box-shadow: 0 2px 5px #ccc;
   padding: 10px;
   width: 240px;
+  height: 180px;
   margin: 16px;
   float: left;
 }
-.note h1 {
+/* .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
-}
-.note p {
+} */
+
+.header-note{
   font-size: 1.1em;
-  margin-bottom: 10px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  /* margin-bottom: 6px; */
+}
+
+.note-properties{
+  /* border: 1px solid red; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end;  */
+   /* bottom:0; */
+   /* width:100%; */
+}
+
+.buttons-notes{
+  /* display: flex;
+  /* flex: 1; */
+  /* justify-content: flex-end;  */
+
+
+  display: flex;
+  flex: 1;
+  align-items: flex-end; 
+  justify-content: flex-end;
+}
+
+.buttons-notes-edit{
+  /* display: flex;
+  /* flex: 1; */
+  /* justify-content: flex-end;  */
+
+
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.p-note {
+  font-size: 1.1em;
+  margin-bottom: 4px;
+  /* margin-bottom: 10px; */
+  /* white-space: pre-wrap;
+  word-wrap: break-word; */
+}
+
+.p-note-bold {
+  font-size: 1.1em;
+  margin-bottom: 4px;
+  font-weight: 600;
+  /* font-weight: bold; */
+  /* margin-bottom: 10px; */
+  /* white-space: pre-wrap;
+  word-wrap: break-word; */
+}
+
+.edit-note{
+  width: 100%;
+  border: none;
+  /* padding: 4px; */
+  outline: none;
+  /* font-size: 1.1em;
+  font-family: inherit; */
+  resize: none;
 }
 
 .note button {
@@ -102,12 +164,4 @@ form.create-note button {
   outline: none;
 }
 
-.edit-note{
-  width: 100%;
-  border: none;
-  /* padding: 4px; */
-  outline: none;
-  font-size: 1.1em;
-  font-family: inherit;
-  resize: none;
-}
+
