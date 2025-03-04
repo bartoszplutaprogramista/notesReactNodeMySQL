@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 html {
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
+  font-family: "Cousine";
 }
 body {
   background: #eee;
@@ -121,7 +122,7 @@ footer p {
 .note button {
   position: relative;
   float: right;
-  margin-right: 10px;
+  margin-right: 0;
   color: #f5ba13;
   border: none;
   width: 36px;
@@ -129,6 +130,18 @@ footer p {
   cursor: pointer;
   outline: none;
 }
+
+/* .edit-button {
+  position: relative;
+  float: right;
+  margin-right: 10px;
+  color: #f5ba13;
+  border: none;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  outline: none;
+}  */
 
 form.create-note {
   position: relative;

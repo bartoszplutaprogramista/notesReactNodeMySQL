@@ -113,7 +113,7 @@ function Note({ data, fetchData }) {
         data.map((item, index) => (
           <div className="note" key={index}>
             {editNote && editNote.idOfNote === item.idOfNote ? (
-              <div>
+              <div className="note-properties">
                 <input
                   className="edit-note p-note-bold"
                   type="text"
@@ -122,13 +122,13 @@ function Note({ data, fetchData }) {
                   maxLength="26"
                 />
                 <textarea
-                  className="edit-note p-note"
+                  className="edit-note p-note h-100"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
                   maxLength="72"
                 />
-                <div className="buttons-notes-edit">
-                  <button onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
+                <div className="buttons-notes">
+                  <button className="border" onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
                 </div>
               </div>
             ) : (
@@ -138,7 +138,7 @@ function Note({ data, fetchData }) {
                 {/* <p name="idOfNote">{item.idOfNote}</p> */}
                 <div className="buttons-notes">
                   {/* <div className="buttons-notes"> */}
-                  <button onClick={() => handleEdit(item)}>
+                  <button className="me-2" onClick={() => handleEdit(item)}>
                     <EditIcon />
                   </button>
                   <button onClick={() => handleDelete(item.idOfNote)}>
