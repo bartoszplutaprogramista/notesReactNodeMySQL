@@ -83,13 +83,16 @@ export default function Home() {
             {
                 auth ?
                     <div>
-                        <h3>You are Authorized {name}</h3>
-                        <button className='btn btn-danger' onClick={handleLogout}>Logout</button>
-                        <Header />
-                        {/* <CreateArea onAdd={addNote} /> */}
-                        <CreateArea onAdd={fetchData} />
-                        <Note data={dataAll} fetchData={fetchData} />
-                        {/* {notes.map((noteItem, index) => {
+                        <div className="container">
+                            <div className="d-flex justify-content-center">
+                                <h3>Jesteś zalogowany jako {name}</h3>
+                                <button className='btn btn-danger ms-2 mb-2' onClick={handleLogout}>Wyloguj się</button>
+                            </div>
+                            <Header />
+                            {/* <CreateArea onAdd={addNote} /> */}
+                            <CreateArea onAdd={fetchData} />
+                            <Note data={dataAll} fetchData={fetchData} />
+                            {/* {notes.map((noteItem, index) => {
                             return (
                                 <Note
                                     key={index}
@@ -100,12 +103,13 @@ export default function Home() {
                                 />
                             );
                         })} */}
+                        </div>
                         <Footer />
                     </div>
                     :
-                    <div>
+                    <div className="d-flex justify-content-center">
                         <h3>{message}</h3>
-                        <h3>Login Now</h3>
+                        <h3>Zaloguj się teraz</h3>
                         <Link to="/login" className='btn btn-primary'>Login</Link>
                     </div>
             }

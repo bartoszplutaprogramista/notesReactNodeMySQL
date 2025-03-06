@@ -107,7 +107,7 @@ function CreateArea({ onAdd }) {
           }}
           // onChange={change()}
           value={note.title}
-          placeholder="Title"
+          placeholder="Tytuł notatki..."
         />
 
 
@@ -120,12 +120,12 @@ function CreateArea({ onAdd }) {
             setShowError("");
           }}
           value={note.content}
-          placeholder="Take a note..."
+          placeholder="Wpisz treść notatki..."
           rows="3"
         />
 
         {/* <button onClick={submitNote} type='submit'><AddIcon /></button> */}
-        <button type='submit'><AddIcon /></button>
+        <button title="Dodaj notatkę" type='submit'><AddIcon /></button>
       </form>
       <div className="d-flex justify-content-center">
         {showError}

@@ -138,10 +138,10 @@ function Note({ data, fetchData }) {
                 {/* <p name="idOfNote">{item.idOfNote}</p> */}
                 <div className="buttons-notes">
                   {/* <div className="buttons-notes"> */}
-                  <button className="me-2" onClick={() => handleEdit(item)}>
+                  <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
                     <EditIcon />
                   </button>
-                  <button onClick={() => handleDelete(item.idOfNote)}>
+                  <button title="Usuń" onClick={() => handleDelete(item.idOfNote)}>
                     <DeleteIcon />
                   </button>
                   {/* </div> */}

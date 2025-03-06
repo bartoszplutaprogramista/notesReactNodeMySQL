@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import { Link } from "react-router";
 
 export default function Registration() {
     const [values, setValues] = useState({
@@ -32,9 +33,9 @@ export default function Registration() {
     }
 
     return (
-        <div className='d-flex justify-content-center align-items-center bg-primary vh-100'>
+        <div className='d-flex justify-content-center align-items-center login-page vh-100'>
             <div className='bg-white p-3 rounded w-50'>
-                <h2>Sign-In</h2>
+                <h2>Rejestracja</h2>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Imię</strong></label>
@@ -48,7 +49,7 @@ export default function Registration() {
 
                         <label htmlFor="password"><strong>Hasło</strong></label>
                         <div className='d-flex align-items-center justify-content-end'>
-                            <input placeholder="EWpisz Hasło" name='password' type={visible ? "text" : "password"} onChange={e => setValues({ ...values, password: e.target.value })} className='form-control rounded-0' />
+                            <input placeholder="Wpisz Hasło" name='password' type={visible ? "text" : "password"} onChange={e => setValues({ ...values, password: e.target.value })} className='form-control rounded-0' />
                             <div className="position-absolute me-3" onClick={() => setVisible(!visible)}>
                                 {
                                     visible ? <EyeOutlined style={{ fontSize: '120%' }} /> : <EyeInvisibleOutlined style={{ fontSize: '120%' }} />
@@ -56,8 +57,11 @@ export default function Registration() {
                             </div>
                         </div>
                     </div>
-                    <button type='submit' className='btn btn-success w-100 rounded-0'>Zarejestruj się</button>
+                    <button type='submit' className='btn btn-danger w-100 rounded-0'>Zarejestruj się</button>
                 </form>
+                <div className="mt-2">
+                    <b>Masz już konto? <Link className={"link-styles"} to="/login">Zaloguj się</Link></b>
+                </div>
             </div>
 
 
