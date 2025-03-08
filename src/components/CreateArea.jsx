@@ -108,6 +108,7 @@ function CreateArea({ onAdd }) {
           // onChange={change()}
           value={note.title}
           placeholder="Tytuł notatki..."
+          maxLength="22"
         />
 
 
@@ -122,6 +123,7 @@ function CreateArea({ onAdd }) {
           value={note.content}
           placeholder="Wpisz treść notatki..."
           rows="3"
+          maxLength="64"
         />
 
         {/* <button onClick={submitNote} type='submit'><AddIcon /></button> */}

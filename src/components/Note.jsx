@@ -119,13 +119,13 @@ function Note({ data, fetchData }) {
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  maxLength="26"
+                  maxLength="22"
                 />
                 <textarea
                   className="edit-note p-note h-100"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  maxLength="72"
+                  maxLength="64"
                 />
                 <div className="buttons-notes">
                   <button className="border" onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>

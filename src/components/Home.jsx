@@ -83,7 +83,7 @@ export default function Home() {
             {
                 auth ?
                     <div>
-                        <div className="container">
+                        <div className="my-container">
                             <div className="d-flex justify-content-center">
                                 <h3>Jesteś zalogowany jako {name}</h3>
                                 <button className='btn btn-danger ms-2 mb-2' onClick={handleLogout}>Wyloguj się</button>
