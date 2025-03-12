@@ -108,7 +108,7 @@ function Note({ data, fetchData }) {
   console.log('Data length: ', data.length);
 
   return (
-    <div>
+    <div className="general-note">
       {data.length > 0 ? (
         data.map((item, index) => (
           <div className="note" key={index}>
@@ -125,7 +125,7 @@ function Note({ data, fetchData }) {
                   className="edit-note p-note h-100"
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  maxLength="64"
+                  maxLength="400"
                 />
                 <div className="buttons-notes">
                   <button className="border" onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
@@ -134,7 +134,9 @@ function Note({ data, fetchData }) {
             ) : (
               <div className="note-properties">
                 <p className="p-note-bold">{item.titleOfNote}</p>
-                <p className="p-note">{item.noteOfNote}</p>
+                <div className="scrollable">
+                  <p className="p-note">{item.noteOfNote}</p>
+                </div>
                 {/* <p name="idOfNote">{item.idOfNote}</p> */}
                 <div className="buttons-notes">
                   {/* <div className="buttons-notes"> */}
