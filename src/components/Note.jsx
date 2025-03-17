@@ -108,54 +108,58 @@ function Note({ data, fetchData }) {
   console.log('Data length: ', data.length);
 
   return (
-    <div className="general-note">
-      {data.length > 0 ? (
-        data.map((item, index) => (
-          <div className="note" key={index}>
-            {editNote && editNote.idOfNote === item.idOfNote ? (
-              <div className="note-properties">
-                <input
-                  className="edit-note p-note-bold"
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                  maxLength="22"
-                />
-                <textarea
-                  className="edit-note p-note h-100"
-                  value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
-                  maxLength="400"
-                />
-                <div className="buttons-notes">
-                  <button className="border" onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
-                </div>
-              </div>
-            ) : (
-              <div className="note-properties">
-                <p className="p-note-bold">{item.titleOfNote}</p>
-                <div className="scrollable">
-                  <p className="p-note">{item.noteOfNote}</p>
-                </div>
-                {/* <p name="idOfNote">{item.idOfNote}</p> */}
-                <div className="buttons-notes">
-                  {/* <div className="buttons-notes"> */}
-                  <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
-                    <EditIcon />
-                  </button>
-                  <button title="Usuń" onClick={() => handleDelete(item.idOfNote)}>
-                    <DeleteIcon />
-                  </button>
-                  {/* </div> */}
-                </div>
+    <div className="outer-container">
+      <div className="border border-success general-note-my">
+        {data.length > 0 ? (
+          data.map((item, index) => (
+            <div>
+              <div className="note" key={index}>
+                {editNote && editNote.idOfNote === item.idOfNote ? (
+                  <div className="note-properties">
+                    <input
+                      className="edit-note p-note-bold"
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      maxLength="22"
+                    />
+                    <textarea
+                      className="edit-note p-note h-100"
+                      value={editContent}
+                      onChange={(e) => setEditContent(e.target.value)}
+                      maxLength="400"
+                    />
+                    <div className="buttons-notes">
+                      <button className="border" onClick={() => handleSave(item.idOfNote)}><SaveIcon /></button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="note-properties">
+                    <p className="p-note-bold">{item.titleOfNote}</p>
+                    <div className="scrollable">
+                      <p className="p-note">{item.noteOfNote}</p>
+                    </div>
+                    {/* <p name="idOfNote">{item.idOfNote}</p> */}
+                    <div className="buttons-notes">
+                      {/* <div className="buttons-notes"> */}
+                      <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
+                        <EditIcon />
+                      </button>
+                      <button title="Usuń" onClick={() => handleDelete(item.idOfNote)}>
+                        <DeleteIcon />
+                      </button>
+                      {/* </div> */}
+                    </div>
 
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>Nie ma żadnych notatek</p>
-      )}
+            </div>
+          ))
+        ) : (
+          <p>Nie ma żadnych notatek</p>
+        )}
+      </div>
     </div>
   );
 }

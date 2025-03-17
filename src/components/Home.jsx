@@ -107,10 +107,10 @@ export default function Home() {
                         <Footer />
                     </div>
                     :
-                    <div className="d-flex justify-content-center">
-                        <h3>{message}</h3>
+                    <div className="d-flex align-items-center justify-content-center mt-5">
+                        {/* <h3>{message}</h3> */}
                         <h3>Zaloguj się teraz</h3>
-                        <Link to="/login" className='btn btn-primary'>Login</Link>
+                        <Link to="/login" className='btn btn-primary ms-3'>Zaloguj się</Link>
                     </div>
             }
 
