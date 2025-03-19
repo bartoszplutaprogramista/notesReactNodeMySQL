@@ -14,6 +14,9 @@ export default function Registration() {
     const [warnings, setWarnings] = useState([]);
     const [password, setPassword] = useState("");
     const [visible, setVisible] = useState(false);
+    const [emailStatus, setEmailStatus] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [timeoutId, setTimeoutId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -31,6 +34,41 @@ export default function Registration() {
             warningsArray.push("Hasło musi zawierać co najmniej jedną cyfrę.");
         }
         setWarnings(warningsArray);
+    };
+
+    const checkEmailAvailability = async (email) => {
+        // setLoading(true);
+        try {
+            const res = await axios.post("http://localhost:8081/check-email", { email });
+            if (res.data.Status === "Taken") {
+                setEmailStatus("Email zajęty.");
+            }
+            // else if (res.data.Status === "Available") {
+            // setEmailStatus("Email dostępny.");
+            // }
+        } catch (error) {
+            setEmailStatus("Błąd podczas sprawdzania emaila.");
+        }
+        // setLoading(false);
+    };
+
+    const handleEmailChange = (e) => {
+        const email = e.target.value;
+        setValues({ ...values, email });
+        setEmailStatus(""); // Reset statusu na początku
+
+        // Debouncing: opóźnia wysłanie zapytania
+        if (timeoutId) {
+            clearTimeout(timeoutId); // Czyszczenie poprzedniego timer'a
+        }
+
+        const newTimeoutId = setTimeout(() => {
+            if (email) {
+                checkEmailAvailability(email);
+            }
+        }, 500); // 500ms opóźnienia
+
+        setTimeoutId(newTimeoutId); // Ustaw nowy timer
     };
 
     const handleChange = (e) => {
@@ -85,7 +123,12 @@ export default function Registration() {
                     </div>
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Email</strong></label>
-                        <input type="email" placeholder="Wpisz Email" name='email' autoComplete='off' onChange={handleChange} className='form-control rounded-0' required />
+                        <input type="email" placeholder="Wpisz Email" name='email' autoComplete='off' onChange={handleEmailChange} className='form-control rounded-0' required />
+                        {/* {loading ? (
+                            <div className="text-info mt-1">Sprawdzanie...</div>
+                        ) : ( */}
+                        <div className="text-danger mt-1">{emailStatus}</div>
+                        {/* )} */}
                     </div>
                     <div className='mb-3'>
 
@@ -108,7 +151,7 @@ export default function Registration() {
                             )}
                         </div>
                     </div>
-                    <button type='submit' className='btn btn-danger w-100 rounded-0'>Zarejestruj się</button>
+                    <button type='submit' className='btn btn-danger w-100 rounded-0' disabled={emailStatus === "Email zajęty."}>Zarejestruj się</button>
                 </form>
                 <div className="mt-2">
                     <b>Masz już konto? <Link className={"link-styles"} to="/login">Zaloguj się</Link></b>

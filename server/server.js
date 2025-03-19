@@ -307,6 +307,34 @@ app.post('/editnote', (req, res) => {
     });
 });
 
+app.post("/check-email", (req, res) => {
+    const {
+        email
+    } = req.body;
+    const query = "SELECT * FROM users WHERE email = ?";
+
+    db.query(query, [email], (err, result) => {
+        if (err) {
+            return res.status(500).json({
+                Status: "Error",
+                Message: "Błąd serwera."
+            });
+        }
+
+        if (result.length > 0) {
+            res.json({
+                Status: "Taken"
+            }); // Email zajęty
+        }
+
+        // else {
+        //     res.json({
+        //         Status: "Available"
+        //     }); // Email dostępny
+        // }
+    });
+});
+
 app.listen(8081, () => {
     console.log("Running...");
 })
