@@ -109,11 +109,12 @@ function Note({ data, fetchData }) {
 
   return (
     <div className="outer-container">
-      <div className="border border-success general-note-my">
+      <div className="general-note-my">
         {data.length > 0 ? (
-          data.map((item, index) => (
-            <div>
-              <div className="note" key={index}>
+          data.map((item) => (
+            <div key={item.idOfNote}>
+              {/* <div className="note" key={index}> */}
+              <div className="note">
                 {editNote && editNote.idOfNote === item.idOfNote ? (
                   <div className="note-properties">
                     <input
@@ -141,6 +142,7 @@ function Note({ data, fetchData }) {
                     </div>
                     {/* <p name="idOfNote">{item.idOfNote}</p> */}
                     <div className="buttons-notes">
+                      {/* <small className="text-muted me-3">Dodano: {new Date().toLocaleDateString("pl-PL")}</small> */}
                       {/* <div className="buttons-notes"> */}
                       <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
                         <EditIcon />

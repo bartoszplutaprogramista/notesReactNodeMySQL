@@ -71,12 +71,18 @@ export default function Registration() {
         setTimeoutId(newTimeoutId); // Ustaw nowy timer
     };
 
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setValues({ ...values, [name]: value });
+    //     if (name === "password") {
+    //         validatePassword(value);
+    //     }
+    // };
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setValues({ ...values, [name]: value });
-        if (name === "password") {
-            validatePassword(value);
-        }
+        const password = e.target.value;
+        setValues({ ...values, password });
+        validatePassword(password);
     };
 
     // if ({ showWarning }) {
@@ -151,7 +157,7 @@ export default function Registration() {
                             )}
                         </div>
                     </div>
-                    <button type='submit' className='btn btn-danger w-100 rounded-0' disabled={emailStatus === "Email zajęty."}>Zarejestruj się</button>
+                    <button type='submit' className='btn btn-danger w-100 rounded-0' disabled={emailStatus === "Email zajęty." || warnings.length > 0}>Zarejestruj się</button>
                 </form>
                 <div className="mt-2">
                     <b>Masz już konto? <Link className={"link-styles"} to="/login">Zaloguj się</Link></b>

@@ -11,7 +11,8 @@ function CreateArea({ onAdd }) {
 
   const [note, setNote] = useState({
     title: "",
-    content: ""
+    content: "",
+    date: new Date().toLocaleDateString("pl-PL")
   });
 
   const [showError, setShowError] = useState("");
@@ -123,7 +124,7 @@ function CreateArea({ onAdd }) {
           value={note.content}
           placeholder="Wpisz treść notatki..."
           rows="3"
-          maxLength="64"
+          maxLength="400"
         />
 
         {/* <button onClick={submitNote} type='submit'><AddIcon /></button> */}
