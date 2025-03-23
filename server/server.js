@@ -194,8 +194,14 @@ app.post('/savetodatabase', async (req, res) => {
 
     console.log("user_id: ", user_id);
     noteIdVar++;
-    const sql = 'INSERT INTO notes (user_id, note_id, title, note) VALUES (?, ?, ?, ?)';
-    db.query(sql, [user_id, noteIdVar, req.body.title, req.body.content], (err, data) => {
+
+    const today = new Date();
+    const currentDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+
+    console.log("Data: ", currentDate);
+
+    const sql = 'INSERT INTO notes (user_id, note_id, title, note, date) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [user_id, noteIdVar, req.body.title, req.body.content, currentDate], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
         })
@@ -261,7 +267,7 @@ app.get('/getAllNotes', (req, res) => {
 
     const user_id = req.session.user_id;
 
-    const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote FROM notes WHERE user_id = ?';
+    const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote, DATE(date) AS dateOfNote FROM notes WHERE user_id = ?';
     console.log('user_id wynosi w server ', user_id);
     // if (req.session.user.idUser) {
     //     console.log('userId SESSION wynosi w server ', req.session.user.idUser)

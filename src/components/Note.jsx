@@ -21,6 +21,13 @@ function Note({ data, fetchData }) {
     // props.onDelete(props.id);
 
   }
+
+  const rawDate = "2025-03-22";
+  const localDate = new Date(rawDate + "T00:00:00"); // Dodanie godziny 00:00:00 wymusza lokalny czas
+  console.log("localDate.toISOString(): ", localDate.toISOString()); // Sprawdź wynik w UTC
+  console.log("localDate.toLocaleString()", localDate.toLocaleString()); // Sprawdź wynik w lokalnym czasie
+  // console.log(new Date("2025-3-22"));
+
   const handleEdit = (note) => {
     setEditNote(note);
     setEditTitle(note.titleOfNote);
@@ -142,7 +149,8 @@ function Note({ data, fetchData }) {
                     </div>
                     {/* <p name="idOfNote">{item.idOfNote}</p> */}
                     <div className="buttons-notes">
-                      {/* <small className="text-muted me-3">Dodano: {new Date().toLocaleDateString("pl-PL")}</small> */}
+                      <small className="text-muted me-3">Dodano: {new Date(item.dateOfNote).toLocaleDateString('pl-PL')}</small>
+                      {/* <small className="text-muted me-3">Dodano: {localDate}</small> */}
                       {/* <div className="buttons-notes"> */}
                       <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
                         <EditIcon />

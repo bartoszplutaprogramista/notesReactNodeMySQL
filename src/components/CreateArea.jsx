@@ -12,7 +12,7 @@ function CreateArea({ onAdd }) {
   const [note, setNote] = useState({
     title: "",
     content: "",
-    date: new Date().toLocaleDateString("pl-PL")
+    // date: new Date().toLocaleDateString("pl-PL")
   });
 
   const [showError, setShowError] = useState("");
