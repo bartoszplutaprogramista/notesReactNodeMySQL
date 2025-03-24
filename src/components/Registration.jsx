@@ -10,12 +10,9 @@ export default function Registration() {
         passwords: ""
     });
 
-    // const [showWarning, setShowWarning] = useState("");
     const [warnings, setWarnings] = useState([]);
-    const [password, setPassword] = useState("");
     const [visible, setVisible] = useState(false);
     const [emailStatus, setEmailStatus] = useState("");
-    const [loading, setLoading] = useState(false);
     const [timeoutId, setTimeoutId] = useState(null);
 
     const navigate = useNavigate();
@@ -37,70 +34,39 @@ export default function Registration() {
     };
 
     const checkEmailAvailability = async (email) => {
-        // setLoading(true);
         try {
             const res = await axios.post("http://localhost:8081/check-email", { email });
             if (res.data.Status === "Taken") {
                 setEmailStatus("Email zajęty.");
             }
-            // else if (res.data.Status === "Available") {
-            // setEmailStatus("Email dostępny.");
-            // }
         } catch (error) {
             setEmailStatus("Błąd podczas sprawdzania emaila.");
         }
-        // setLoading(false);
     };
 
     const handleEmailChange = (e) => {
         const email = e.target.value;
         setValues({ ...values, email });
-        setEmailStatus(""); // Reset statusu na początku
+        setEmailStatus("");
 
-        // Debouncing: opóźnia wysłanie zapytania
         if (timeoutId) {
-            clearTimeout(timeoutId); // Czyszczenie poprzedniego timer'a
+            clearTimeout(timeoutId);
         }
 
         const newTimeoutId = setTimeout(() => {
             if (email) {
                 checkEmailAvailability(email);
             }
-        }, 500); // 500ms opóźnienia
+        }, 500);
 
-        setTimeoutId(newTimeoutId); // Ustaw nowy timer
+        setTimeoutId(newTimeoutId);
     };
-
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setValues({ ...values, [name]: value });
-    //     if (name === "password") {
-    //         validatePassword(value);
-    //     }
-    // };
 
     const handleChange = (e) => {
         const password = e.target.value;
         setValues({ ...values, password });
         validatePassword(password);
     };
-
-    // if ({ showWarning }) {
-    //     showWarningIfSet();
-    // };
-
-    // function showWarningIfSet() {
-    //     const regex = /[a-z]/;
-    //     const str = values.passwords;
-    //     // const matches = str.match(regex);
-    //     // const matches2 = str.match(regex);
-    //     // if (str.length < 6) setShowWarning("Hasło musi zawierać przynajmniej 6 znaków");
-    //     if (str.length < 6) console.log("Hasło musi zawierać przynajmniej 6 znaków");
-    //     // if (matches === null) setShowWarning("Hasło musi zawierać conajmniej jedną literę");
-    //     // if (matches === null) console.log("Hasło musi zawierać conajmniej jedną literę");
-    //     // if (matches2 === null) setShowWarning("Hasło musi zawierać conajmniej jedną cyfrę");
-    //     // if (matches2 === null) console.log("Hasło musi zawierać conajmniej jedną cyfrę");
-    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -122,7 +88,6 @@ export default function Registration() {
             <div className='bg-white p-3 rounded w-50'>
                 <h2>Rejestracja</h2>
                 <form onSubmit={handleSubmit}>
-                    {/* <form> */}
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Imię</strong></label>
                         <input type="text" placeholder="Wpisz Imię" name='name' autoComplete='off' onChange={e => setValues({ ...values, name: e.target.value })} className='form-control rounded-0' required />
@@ -130,11 +95,7 @@ export default function Registration() {
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Email</strong></label>
                         <input type="email" placeholder="Wpisz Email" name='email' autoComplete='off' onChange={handleEmailChange} className='form-control rounded-0' required />
-                        {/* {loading ? (
-                            <div className="text-info mt-1">Sprawdzanie...</div>
-                        ) : ( */}
                         <div className="text-danger mt-1">{emailStatus}</div>
-                        {/* )} */}
                     </div>
                     <div className='mb-3'>
 

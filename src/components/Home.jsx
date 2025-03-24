@@ -39,8 +39,6 @@ export default function Home() {
             }).catch(err => console.log(err))
     }
 
-    const [notes, setNotes] = useState([]);
-
     const fetchData = () => {
         axios.get('http://localhost:8081/getAllNotes')
             .then(response => {
@@ -51,29 +49,6 @@ export default function Home() {
             });
     };
 
-    function addNote(newNote) {
-        setNotes(prevNotes => {
-            return [...prevNotes, newNote];
-        });
-    }
-
-    function deleteNote(id) {
-        setNotes(prevNotes => {
-            return prevNotes.filter((noteItem, index) => {
-                return index !== id;
-            });
-        });
-    }
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:8081/getAllNotes')
-    //         .then(response => {
-    //             setData(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Błąd przy pobieraniu danych: ', error);
-    //         });
-    // }, []);
     useEffect(() => {
         fetchData();
     }, []);
@@ -89,28 +64,15 @@ export default function Home() {
                                 <button className='btn btn-danger ms-2 mb-2' onClick={handleLogout}>Wyloguj się</button>
                             </div>
                             <Header />
-                            {/* <CreateArea onAdd={addNote} /> */}
                             <CreateArea onAdd={fetchData} />
                             <Note data={dataAll} fetchData={fetchData} />
-                            {/* {notes.map((noteItem, index) => {
-                            return (
-                                <Note
-                                    key={index}
-                                    id={index}
-                                    title={noteItem.title}
-                                    content={noteItem.content}
-                                    onDelete={deleteNote}
-                                />
-                            );
-                        })} */}
                         </div>
                         <Footer />
                     </div>
                     :
                     <div className="d-flex align-items-center justify-content-center mt-5">
-                        {/* <h3>{message}</h3> */}
-                        <h3>Zaloguj się teraz</h3>
-                        <Link to="/login" className='btn btn-primary ms-3'>Zaloguj się</Link>
+                        <h3>Zaloguj się lub zarejestruj się teraz</h3>
+                        <Link to="/login" className='btn btn-primary ms-3'>Zaloguj się/Zarejestruj się</Link>
                     </div>
             }
 
