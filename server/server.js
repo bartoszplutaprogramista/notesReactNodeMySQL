@@ -175,33 +175,34 @@ app.post('/savetodatabase', async (req, res) => {
             Massage: "User is not logged in"
         });
     }
-    let noteIdVar;
+    // let noteIdVar;
     const user_id = req.session.user_id;
 
-    try {
-        // const user_id = req.body.user_id; // Przykładowe uzyskanie user_id z zapytania
-        noteIdVar = await getNoteId(user_id);
-        console.log("NOTE ID WYNOSI outside NOTEID: ", noteIdVar); // wartość uzyskana
-        // res.json({
-        //     noteId: noteIdVar
-        // });
-    } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({
-            Message: "Server Side Error"
-        });
-    }
+    // try {
+    //     // const user_id = req.body.user_id; // Przykładowe uzyskanie user_id z zapytania
+    //     noteIdVar = await getNoteId(user_id);
+    //     console.log("NOTE ID WYNOSI outside NOTEID: ", noteIdVar); // wartość uzyskana
+    //     // res.json({
+    //     //     noteId: noteIdVar
+    //     // });
+    // } catch (error) {
+    //     console.error("Error:", error);
+    //     res.status(500).json({
+    //         Message: "Server Side Error"
+    //     });
+    // }
 
     console.log("user_id: ", user_id);
-    noteIdVar++;
+    // noteIdVar++;
 
     const today = new Date();
-    const currentDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+    // const currentDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
+    const currentDate = new Date().toISOString().split('T')[0];
 
     console.log("Data: ", currentDate);
 
-    const sql = 'INSERT INTO notes (user_id, note_id, title, note, date) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [user_id, noteIdVar, req.body.title, req.body.content, currentDate], (err, data) => {
+    const sql = 'INSERT INTO notes (user_id, title, note, date) VALUES (?, ?, ?, ?)';
+    db.query(sql, [user_id, req.body.title, req.body.content, currentDate], (err, data) => {
         if (err) return res.json({
             Massage: "Server Side Error"
         })
@@ -213,7 +214,7 @@ app.post('/savetodatabase', async (req, res) => {
         }
     })
 
-    console.log("NOTE ID WYNOSI outside CAŁKIEM NA ZEWNĄTRZ NOTEID: ", noteIdVar);
+    // console.log("NOTE ID WYNOSI outside CAŁKIEM NA ZEWNĄTRZ NOTEID: ", noteIdVar);
 });
 
 const getNoteId = (user_id) => {
@@ -267,7 +268,7 @@ app.get('/getAllNotes', (req, res) => {
 
     const user_id = req.session.user_id;
 
-    const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote, DATE(date) AS dateOfNote FROM notes WHERE user_id = ?';
+    const sql = 'SELECT id AS idOfNote, title AS titleOfNote, note AS noteOfNote, DATE(date) AS dateOfNote, DATE(editedDate) AS editedDateOfNote FROM notes WHERE user_id = ?';
     console.log('user_id wynosi w server ', user_id);
     // if (req.session.user.idUser) {
     //     console.log('userId SESSION wynosi w server ', req.session.user.idUser)
@@ -300,8 +301,12 @@ app.post('/editnote', (req, res) => {
         title,
         content
     } = req.body;
-    const sql = 'UPDATE notes SET title = ?, note = ? WHERE id = ?';
-    db.query(sql, [title, content, id], (err, data) => {
+    const editedDateUpdate = new Date().toISOString().split('T')[0];
+
+    console.log("editedDateUpdate: ", editedDateUpdate);
+
+    const sql = 'UPDATE notes SET title = ?, note = ?, editedDate = ? WHERE id = ?';
+    db.query(sql, [title, content, editedDateUpdate, id], (err, data) => {
         if (err) return res.json({
             Message: "Server Side Error"
         });

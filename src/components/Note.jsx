@@ -149,8 +149,15 @@ function Note({ data, fetchData }) {
                     </div>
                     {/* <p name="idOfNote">{item.idOfNote}</p> */}
                     <div className="buttons-notes">
-                      <small className="text-muted me-3">Dodano: {new Date(item.dateOfNote).toLocaleDateString('pl-PL')}</small>
-                      {/* <small className="text-muted me-3">Dodano: {localDate}</small> */}
+                      <div >
+                        {/* <small className="text-muted me-3"> */}
+                        <small className="me-2">
+                          {/* Dodano: {new Date(item.dateOfNote).toLocaleDateString('pl-PL')}</small> */}
+                          {item.editedDateOfNote
+                            ? `Edyt.: ${new Date(item.editedDateOfNote).toLocaleDateString('pl-PL')}`
+                            : `Dodano: ${new Date(item.dateOfNote).toLocaleDateString('pl-PL')}`}
+                        </small>
+                      </div>
                       {/* <div className="buttons-notes"> */}
                       <button className="me-2" title="Edytuj" onClick={() => handleEdit(item)}>
                         <EditIcon />
