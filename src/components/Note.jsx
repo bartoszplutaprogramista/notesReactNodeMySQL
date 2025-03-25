@@ -28,7 +28,6 @@ function Note({ data, fetchData }) {
         if (res.data.Status === "Success") {
           fetchData();
           setEditNote(null);
-          console.log("Zaktualizowano!");
         } else {
           alert("Nie zaktualizowano");
         }
@@ -43,15 +42,12 @@ function Note({ data, fetchData }) {
       .then(res => {
         if (res.data.Status === "Success") {
           fetchData();
-          console.log("USUNIĘTO!");
         } else {
           alert("Nie usunięto");
         }
       })
       .catch(err => console.group(err));
   };
-  console.log('Data received via props:', { data });
-  console.log('Data length: ', data.length);
 
   return (
     <div className="outer-container">

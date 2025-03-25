@@ -73,7 +73,7 @@ export default function Registration() {
         axios.post('http://localhost:8081/registration', values)
             .then(res => {
                 if (res.data.Status === "Success") {
-                    alert("Zarejestrowano pomyślnie! Mozesz się teraz zalogować.")
+                    alert("Zarejestrowano pomyślnie! Możesz się teraz zalogować.")
                     navigate('/login');
 
                 } else {

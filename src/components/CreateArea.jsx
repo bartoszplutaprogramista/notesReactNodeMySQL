@@ -10,8 +10,6 @@ function CreateArea({ onAdd }) {
     content: "",
   });
 
-  const [showError, setShowError] = useState("");
-
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -31,13 +29,11 @@ function CreateArea({ onAdd }) {
     })
       .then(res => {
         if (res.data.Status === "Success") {
-          setShowError("Pomyślnie dodano do bazy! ");
           onAdd();
           setNote({
             title: "",
             content: ""
           });
-          console.log("res.data ", res.data);
         } else {
           alert("Nie dodano");
         }
@@ -54,7 +50,6 @@ function CreateArea({ onAdd }) {
           onChange={e => {
             setNote({ ...note, title: e.target.value });
             { handleChange };
-            setShowError("");
           }}
           value={note.title}
           placeholder="Tytuł notatki..."
@@ -67,7 +62,6 @@ function CreateArea({ onAdd }) {
           onChange={e => {
             setNote({ ...note, content: e.target.value });
             { handleChange };
-            setShowError("");
           }}
           value={note.content}
           placeholder="Wpisz treść notatki..."
@@ -77,7 +71,6 @@ function CreateArea({ onAdd }) {
         <button title="Dodaj notatkę" type='submit'><AddIcon /></button>
       </form>
       <div className="d-flex justify-content-center">
-        {showError}
       </div>
     </div>
   );

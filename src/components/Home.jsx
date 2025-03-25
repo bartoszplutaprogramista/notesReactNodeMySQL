@@ -70,8 +70,11 @@ export default function Home() {
                         <Footer />
                     </div>
                     :
-                    <div className="d-flex align-items-center justify-content-center mt-5">
-                        <h3>Zaloguj się lub zarejestruj się teraz</h3>
+                    <div className="d-flex align-items-center justify-content-center mt-5 flex-column">
+                        <div className="home-page">
+                            <h3>Aplikacja "Notatki" pozwala na dodawanie nowych notatek ich edycję oraz usuwanie. Dodana data pozwala (przy każdej nowo dodanej notatce) na zorientowanie się kiedy notatka została dodana  lub i czy wogóle była edytowana.</h3>
+                        </div>
+                        <h3 className="mt-4">Zaloguj się lub zarejestruj się teraz</h3>
                         <Link to="/login" className='btn btn-primary ms-3'>Zaloguj się/Zarejestruj się</Link>
                     </div>
             }

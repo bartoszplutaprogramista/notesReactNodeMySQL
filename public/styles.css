@@ -151,6 +151,11 @@ footer p {
   outline: none;
 }
 
+.home-page {
+  width: 50%;
+  text-align: center;
+}
+
 form.create-note {
   position: relative;
   width: 480px;
@@ -185,4 +190,10 @@ form.create-note button {
   outline: none;
 }
 
+@media (max-width: 1400px)
+{
+  .home-page {
+    width: 100%;
+  }
+}
 
